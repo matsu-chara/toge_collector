@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ruby toge_collector.rb "TOKEN" "FIRST_URL"  1000
+ruby toge_collector.rb "TOKEN" "$1" 1000

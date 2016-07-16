@@ -24,13 +24,13 @@ channel_id = (client.channels_list(exclude_archived: 1)['channels'].find do |e|
   e['name'] == arg[:channel_name]
 end)['id']
 
-messages = client.channels_history(
+messages = (client.channels_history(
   channel: channel_id,
   oldest:  arg[:oldest],
   count:   [arg[:count], 1000].min
 )['messages'].map do |m|
   { message: m['text'], timestamp: m['ts'].sub(/\./, '') }
-end
+end).reverse
 
 # togelackは30件ずつのurlを要求するので、30件に１個だけ表示する
 infos = (messages.select.with_index { |_, idx| idx % 30 == 0 }).map do |m|
@@ -38,7 +38,9 @@ infos = (messages.select.with_index { |_, idx| idx % 30 == 0 }).map do |m|
 end
 
 puts '===messages==='
-messages.each_with_index { |e, idx| puts "#{idx / 30}-#{idx % 30} #{e[:message]}" }
+messages.each_with_index do |e, idx|
+  puts "#{idx / 30}-#{idx % 30} #{e[:message]}"
+end
 puts ''
 puts '===ids==='
 infos.each { |e| puts "\"#{e[:url]}\"" }
