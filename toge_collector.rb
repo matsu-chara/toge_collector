@@ -42,5 +42,5 @@ messages.each_with_index do |e, idx|
   puts "#{idx / 30}-#{idx % 30} #{e[:message]}"
 end
 puts ''
-puts '===ids==='
+puts '===urls==='
 infos.each { |e| puts "\"#{e[:url]}\"" }
