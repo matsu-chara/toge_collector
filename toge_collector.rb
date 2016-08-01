@@ -27,6 +27,7 @@ end)['id']
 messages = (client.channels_history(
   channel: channel_id,
   oldest:  arg[:oldest],
+  inclusive: 1,
   count:   [arg[:count], 1000].min
 )['messages'].map do |m|
   { message: m['text'], timestamp: m['ts'].sub(/\./, '') }
